@@ -1,44 +1,49 @@
-# Allen Brain Alzheimer’s Transcriptomic Analysis
-Comprehensive analysis pipeline to identify cell-type–specific differential expression in Alzheimer’s disease using the Allen Brain Institute’s SEA-AD dataset.
+# 🧠 Allen Brain Alzheimer’s Transcriptomic Analysis  
+**Cell-Type–Specific Differential Expression and Pathway Discovery Using Allen Brain (SEA-AD) Data**
 
-## Overview
-This project reproduces a genomics workflow:
-1. Preprocess and QC single-cell or single-nucleus RNA-seq data.
-2. Generate embeddings (PCA, UMAP) and cluster by cell type.
-3. Create pseudo-bulk matrices per donor and cell type.
-4. Run differential expression (DE) controlling for covariates (age, sex).
-5. Perform pathway and enrichment analysis.
-6. Visualize spatial and cell-type–specific expression patterns.
+---
 
-## Data
-- Source: [Allen Brain Atlas — SEA-AD MTG](https://portal.brain-map.org/explore/transcriptome/mcg-sea-ad)
-- Download raw `.h5ad` files manually or via the Allen SDK.
+## 📘 Overview
 
-## Environment
-Build Docker image:
-```bash
-docker build -t allen-ad-analysis -f environment/Dockerfile .
-```
-Run container:
-```bash
-docker run -v $(pwd):/app allen-ad-analysis
-```
-Or install locally:
-```bash
-pip install -r environment/requirements.txt
-```
-## Reproducible Workflow
+This repository provides a **reproducible research pipeline** for analyzing **single-cell and single-nucleus transcriptomic data** from the **Allen Brain Institute’s SEA-AD dataset** (or synthetic mock data) to identify **cell-type–specific molecular signatures of Alzheimer’s disease**.
 
-| Step                  | Script / Notebook                                | Output                 |
-|------------------------|--------------------------------------------------|------------------------|
-| QC & Preprocessing     | `01_qc_and_preprocessing.ipynb`                 | Cleaned AnnData        |
-| UMAP & Clustering      | `02_umap_and_clustering.ipynb`                  | Figures, `.h5ad`       |
-| Pseudo-bulk DE         | `03_pseudobulk_DE.ipynb`, `run_pseudobulk_DE.R` | CSV tables             |
-| Functional Analysis    | `04_functional_analysis.ipynb`                  | Enrichment plots       |
+The project demonstrates a full bioinformatics workflow — from **data ingestion and QC** to **dimensionality reduction**, **pseudo-bulk differential expression (DE)**, and **functional enrichment analysis** — using open-source tools in Python and R.
 
+It includes:
+- 🧬 A **synthetic dataset generator** to simulate Allen-like data.
+- 🧹 Scripts for **QC, normalization, and UMAP visualization**.
+- 📊 **Pseudo-bulk aggregation** by donor and cell type.
+- 🧮 **Covariate-adjusted DE** analysis (diagnosis + age + sex).
+- 📈 **Functional enrichment** via g:Profiler.
+- 🐳 A **Dockerized environment** for full reproducibility.
 
-## Citation
+---
 
-If you use this repo, please cite:
+## 🏗️ Project Structure
 
-- Allen Institute for Brain Science — SEA-AD MTG dataset
+allen-brain-ad-analysis/
+├── README.md
+├── environment/
+│ ├── Dockerfile
+│ ├── requirements.txt
+│ └── env.yml
+├── data/
+│ ├── raw/ # Raw or synthetic data (mock_allen.h5ad)
+│ └── processed/ # QC’d and processed datasets
+├── notebooks/
+│ ├── 00_generate_mock_allen_data.ipynb
+│ ├── 01_qc_and_preprocessing.ipynb
+│ ├── 02_umap_and_clustering.ipynb
+│ ├── 03_pseudobulk_DE.ipynb
+│ └── 04_functional_analysis.ipynb
+├── scripts/
+│ ├── allen_pipeline.py # Main end-to-end workflow
+│ ├── run_pseudobulk_DE.R # R DESeq2 analysis
+│ ├── pathway_enrichment.py # Pathway enrichment
+│ ├── utils.py # Helper functions
+│ └── config.yaml # Config parameters
+├── results/
+│ ├── figures/
+│ ├── tables/
+│ └── logs/
+└── .gitignore
